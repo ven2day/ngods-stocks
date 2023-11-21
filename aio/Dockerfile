@@ -48,7 +48,7 @@ WORKDIR ${INSTALL_DIR}
 
 # Install python deps
 COPY conf/requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt \
+RUN pip3 install -r requirements.txt \
     && rm requirements.txt
 
 # Download and install IJava jupyter kernel
