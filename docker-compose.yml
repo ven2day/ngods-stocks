@@ -16,11 +16,6 @@ services:
     command: server /data --console-address ":9001"
     networks:
       - ndsnet
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
   mc:
     image: minio/mc
@@ -40,8 +35,8 @@ services:
       exit 0;
       "    
     depends_on:
-      minio:
-        condition: service_healthy  
+      - minio
+ 
 
   postgres:
     image: postgres
@@ -93,10 +88,8 @@ services:
     command: 
       - notebook
     depends_on:
-      postgres:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
+      - postgres
+      - minio
   
   trino:
     build: trino/
@@ -115,10 +108,9 @@ services:
         aliases:
           - trino
     depends_on:
-      postgres:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
+      - postgres
+      - minio
+
     ulimits:
       nproc: 65535
       nofile:
