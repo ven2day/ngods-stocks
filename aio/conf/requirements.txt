@@ -20,3 +20,5 @@ kaggle==1.5.12
 yfinance==0.2.32
 pmdarima==2.0.4
 matplotlib==3.8.2
+dbt==1.0.0.34.14
+importlib==1.0.4
