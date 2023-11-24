@@ -15,7 +15,7 @@ start-history-server.sh
 ${KYUUBI_HOME}/bin/kyuubi start
 
 # dagster
-cd ${DAGSTER_DIR} && dagit -h 0.0.0.0 -p 3070 &
+cd ${DAGSTER_DIR} && dagster-webserver -h 0.0.0.0 -p 3070 &
 
 # Entrypoint, for example notebook, pyspark or spark-sql
 if [[ $# -gt 0 ]] ; then
