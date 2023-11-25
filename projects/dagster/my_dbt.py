@@ -7,42 +7,42 @@ from dagster_dbt import DbtCliResource
 dbt_module = importlib.import_module('my_dbt')
 
 def _dbt_run(context):
-    pdir = context.op_config['project_dir']
+    pdir = context.resources.my_dbt.project_dir
     context.log.info(f"elt: executing dbt run with project_dir: '{pdir}'")
-    if 'select' in context.op_config:
-        s = context.op_config['select']        
+    if 'select' in context.config:
+        s = context.config['select']        
         context.log.info(f"elt: executing dbt run with select: '{s}'")
         context.resources.my_dbt.cli(["run", "--project-dir", pdir, "--select", s])
     else:
         context.resources.my_dbt.cli(["run", "--project-dir", pdir])
 
 def _dbt_test(context):
-    pdir = context.op_config['project_dir']
+    pdir = context.resources.my_dbt.project_dir
     context.log.info(f"elt: executing dbt test with project_dir: '{pdir}'")
-    if 'select' in context.op_config:
-        s = context.op_config['select']        
+    if 'select' in context.config:
+        s = context.config['select']        
         context.log.info(f"elt: executing dbt run with select: '{s}'")
         context.resources.my_dbt.cli(["run", "--project-dir", pdir, "--select", s])
     else:
         context.resources.my_dbt.cli(["run", "--project-dir", pdir])
 
 def _dbt_generate_docs(context):
-    pdir = context.op_config['project_dir']
+    pdir = context.resources.my_dbt.project_dir
     context.log.info(f"elt: executing dbt docs generate with project_dir: '{pdir}'")
-    if 'select' in context.op_config:
-        s = context.op_config['select']        
+    if 'select' in context.config:
+        s = context.config['select']        
         context.log.info(f"elt: executing dbt run with select: '{s}'")
         context.resources.my_dbt.cli(["run", "--project-dir", pdir, "--select", s])
     else:
         context.resources.my_dbt.cli(["run", "--project-dir", pdir])
 
 def _dbt_source_freshness(context):
-    pdir = context.op_config['project_dir']
+    pdir = context.resources.my_dbt.project_dir
     context.log.info(f"elt: executing dbt source freshness with project_dir: '{pdir}'")
     #context.resources.my_dbt.cli(["compile", "--project-dir", pdir])
     #manifest_path = os.path.join(pdir, "target", "manifest.json")
-    if 'select' in context.op_config:
-        s = context.op_config['select']        
+    if 'select' in context.config:
+        s = context.config['select']        
         context.log.info(f"elt: executing dbt run with select: '{s}'")
         context.resources.my_dbt.cli(["run", "--project-dir", pdir, "--select", s])
     else:
