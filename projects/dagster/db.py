@@ -59,12 +59,13 @@ def drop_all_tables_in_schema(context, trino, schema_name):
         context.log.info(f"Schema: {schema_name}")
         cursor.execute(f"show tables from {schema_name}")
         tables = cursor.fetchall()     
-    with trino.get_connection() as conn:  
-        cursor = conn.cursor()
         for table in tables:            
             drop_statement = f"drop table if exists {schema_name}.{table[0]}"
             context.log.info(f"{drop_statement}")
-            cursor.execute(drop_statement)
+            try:
+                cursor.execute(drop_statement)
+            except Exception as e:
+                context.log.error(f"Error executing {drop_statement}: {e}")
         conn.commit()
         cursor.close()
 

@@ -1,5 +1,5 @@
 resources:
-  dbt:
+  my_dbt:
     config:
       project_dir: ../dbt/bronze
       profiles_dir: ../dbt
