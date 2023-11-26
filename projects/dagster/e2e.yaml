@@ -1,8 +1,8 @@
 resources:
   my_dbt:
     config:
-      project_dir: ../dbt/bronze
-      profiles_dir: ../dbt
+      project_dir: /var/lib/ngods/dbt/bronze
+      profiles_dir: /var/lib/ngods/dbt
   trino:
     config:
       host: trino
@@ -12,22 +12,22 @@ resources:
 ops:
   dbt_bronze_run_op:
     config:
-      project_dir: ../dbt/bronze
+      project_dir: /var/lib/ngods/dbt/bronze
   dbt_silver_run_op:
     config:
-      project_dir: ../dbt/silver
+      project_dir: /var/lib/ngods/dbt/silver
   dbt_gold_run_op:
     config:
-      project_dir: ../dbt/gold
+      project_dir: /var/lib/ngods/dbt/gold
   dbt_bronze_test_doc_sources_op:
     config:
-      project_dir: ../dbt/bronze
+      project_dir: /var/lib/ngods/dbt/bronze
   dbt_silver_test_doc_sources_op:
     config:
-      project_dir: ../dbt/silver
+      project_dir: /var/lib/ngods/dbt/silver
   dbt_gold_test_doc_sources_op:
     config:
-      project_dir: ../dbt/gold
+      project_dir: /var/lib/ngods/dbt/gold
   download_yahoo_finance_files_op:  
     config: 
       target_file: /var/lib/ngods/stage/stocks.csv
