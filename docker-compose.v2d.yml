@@ -70,6 +70,8 @@ services:
       interval: 5s
       retries: 5
     restart: always
+    networks:
+      - ndsnet
 
   redis:
     image: redis:latest
@@ -81,6 +83,8 @@ services:
       timeout: 30s
       retries: 50
     restart: always
+    networks:
+      - ndsnet
 
   airflow-webserver:
     <<: *airflow-common
@@ -93,10 +97,13 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+    networks:
+      - ndsnet
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+
 
   airflow-scheduler:
     <<: *airflow-common
@@ -107,6 +114,8 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+    networks:
+      - ndsnet
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -128,6 +137,8 @@ services:
       # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
       DUMB_INIT_SETSID: "0"
     restart: always
+    networks:
+      - ndsnet
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -142,6 +153,8 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+    networks:
+      - ndsnet
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -222,6 +235,8 @@ services:
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
       _PIP_ADDITIONAL_REQUIREMENTS: ''
     user: "0:0"
+    networks:
+      - ndsnet
     volumes:
       - ./airflow:/sources
 
@@ -233,6 +248,8 @@ services:
       <<: *airflow-common-env
       CONNECTION_CHECK_MAX_COUNT: "0"
     # Workaround for entrypoint issue. See: https://github.com/apache/airflow/issues/16252
+    networks:
+      - ndsnet
     command:
       - bash
       - -c
