@@ -39,14 +39,14 @@ x-airflow-common:
     - ./airflow/plugins:/opt/airflow/plugins
     
     # Manual mappings performed
-    - projects/dbt:/opt/airflow/dbt
-    - projects/data_csv:/opt/airflow/data_csv
+    - ./projects/dbt:/opt/airflow/dbt
+    - ./projects/data_csv:/opt/airflow/data_csv
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
     redis:
       condition: service_healthy
-    postgres:
+    postgres-airflow:
       condition: service_healthy
 
 services:
@@ -64,7 +64,7 @@ services:
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5431:5432
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 5s
@@ -294,8 +294,8 @@ services:
       exit 0;
       "    
     depends_on:
-      minio:
-        condition: service_healthy  
+      - minio
+        #condition: service_healthy  
 
   postgres:
     image: postgres
@@ -894,4 +894,5 @@ volumes:
     name: ${DB_DOCKER_MOUNT}
   ingestion-volume-dag-airflow:
   ingestion-volume-dags:
+  postgres-db-volume:
   ingestion-volume-tmp:
