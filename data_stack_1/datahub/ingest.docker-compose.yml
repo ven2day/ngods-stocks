@@ -1,0 +1,14 @@
+---
+version: '3.8'
+
+services:
+  ingestion:
+    image: linkedin/datahub-ingestion:${DATAHUB_VERSION}
+    hostname: ingestion
+    container_name: ingestion
+    env_file: .env
+    command: "ingest -c /sample_recipe.yml"
+    volumes: 
+      # Most of the config is embedded inside the sample recipe file.
+      - ./sample_recipe.yml:/sample_recipe.yml:ro
+      - ./metadata-ingestion/bootstrap_mce.json:/bootstrap_mce.json:ro
